@@ -65,8 +65,26 @@ let rec lookup i = function
 let rec update i x = function
   | [] -> raise Empty
   | Zero :: tl -> Zero :: update i x tl
-  | One t :: tl -> 
+  | (One t as hd) :: tl -> 
     if i < size t
     then One (updateTree i x t) :: tl
-    else One t :: update (i - size t) x tl
+    else hd :: update (i - size t) x tl
+
+let rec dropTree i t = match i, t with
+  | 0, _ -> [One t]
+  | 1, Leaf _ -> [Zero]
+  | i, Leaf _ -> raise Empty
+  | i, Node (n, left, right) ->
+    if i > n / 2
+    then dropTree (i - n / 2) right
+    else One right :: dropTree i left
+
+let rec drop i ts = match i, ts with
+  | 0, _ -> ts
+  | i, [] -> raise Empty
+  | i, Zero :: tl -> drop i tl
+  | i, One t :: tl -> 
+    if i > size t 
+    then drop (i - size t) tl
+    else (List.rev (dropTree i t)) @ tl 
 
