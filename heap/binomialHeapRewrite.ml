@@ -28,7 +28,7 @@ module Make (Elem : Comparable) : (Heap with type elem = Elem.t) = struct
     | [] -> true
     | _ -> false
 
-  let root = function 
+  let root = function
     | Node (v, _) -> v
 
   let link t1 t2 = match t1, t2 with
@@ -71,7 +71,6 @@ module Make (Elem : Comparable) : (Heap with type elem = Elem.t) = struct
     | (r, Node (_, ts1)), ts2 -> 
       merge (List.fold_left ts1 ~init:[] ~f:(fun ts t ->
           match ts with
-           | [] -> [r - 1, t]
-           | (r1, t1) :: tl -> (r1 - 1, t) :: ts)) ts2
-
+          | [] -> [r - 1, t]
+          | (r1, t1) :: tl -> (r1 - 1, t) :: ts)) ts2
 end

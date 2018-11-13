@@ -72,6 +72,5 @@ module Make (Elem : Comparable) : (Heap with type elem = Elem.t) = struct
 
   let deleteMin ts = match (removeMinTree ts) with
     | Node (_, _, ts1), ts2 -> merge (List.rev ts1) ts2
- 
 end
 
