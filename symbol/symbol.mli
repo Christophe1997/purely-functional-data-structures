@@ -1,5 +1,5 @@
-type symbol
+type t
 
-val make_symbol : string -> symbol
+val make_symbol : string -> t
 
-val name : symbol -> string
+val name : t -> string
